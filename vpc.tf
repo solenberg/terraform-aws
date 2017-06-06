@@ -52,18 +52,16 @@ resource "aws_subnet" "us-east-2b-private" {
   availability_zone = "us-east-2b"
 
   tags = {
-    Name = "Solenberg Private Subnet"
+    Name = "Private Subnet"
   }
 }
-
-/* Yes, I know this is wrong. */
 
 resource "aws_route_table" "us-east-2b-private" {
   vpc_id = "${aws_vpc.default.id}"
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = "${aws_internet_gateway.default.id}"
+    gateway_id = "${aws_instance.nat.id}"
   }
 
   tags {
