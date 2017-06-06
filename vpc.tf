@@ -56,6 +56,8 @@ resource "aws_subnet" "us-east-2b-private" {
   }
 }
 
+/* Yes, I know this is wrong. */
+
 resource "aws_route_table" "us-east-2b-private" {
   vpc_id = "${aws_vpc.default.id}"
 
