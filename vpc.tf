@@ -143,10 +143,10 @@ resource "aws_subnet" "us-east-2b-private" {
 resource "aws_route_table" "us-east-2b-private" {
   vpc_id = "${aws_vpc.default.id}"
 
-  #route {
-  #  cidr_block = "0.0.0.0/0"
-  #  gateway_id = "${aws_instance.nat_testing.id}"
-  #}
+  route {
+    cidr_block = "0.0.0.0/0"
+    instance_id = "${aws_instance.nat_testing.id}"
+  }
 
   tags {
     Name = "Private Subnet"
