@@ -61,7 +61,7 @@ resource "aws_security_group" "nat" {
 }
 
 resource "aws_instance" "nat" {
-  ami = "ami-07fdd962" # Preconfigured NAT AMI
+  ami = "ami-07fdd962"
   availability_zone = "us-east-2"
   instance_type = "t2.micro"
   key_name = "${var.aws_key_name}"
@@ -79,4 +79,3 @@ resource = "aws_eip" "nat" {
   instance = "${aws_instance.nat.id}"
   vpc = true
 }
-
