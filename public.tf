@@ -23,6 +23,12 @@ resource "aws_security_group" "web" {
         protocol = "icmp"
         cidr_blocks = ["0.0.0.0/0"]
     }
+    ingress {
+        from_port = 22
+        to_port = 22
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
 
     egress { # SQL Server
         from_port = 1433
@@ -35,6 +41,12 @@ resource "aws_security_group" "web" {
         to_port = 3306
         protocol = "tcp"
         cidr_blocks = ["${var.private_subnet_cidr}"]
+    }
+    egress {
+        from_port = 22
+        to_port = 22
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
     }
 
     vpc_id = "${aws_vpc.default.id}"
