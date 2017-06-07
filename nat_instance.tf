@@ -62,7 +62,7 @@ resource "aws_security_group" "nat" {
 
 resource "aws_instance" "nat" {
   ami = "ami-07fdd962"
-  availability_zone = "us-east-2"
+  availability_zone = "us-east-2a"
   instance_type = "t2.micro"
   key_name = "${var.aws_key_name}"
   vpc_security_group_ids = ["${aws_security_group.nat.id}"]
