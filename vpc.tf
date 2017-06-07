@@ -14,9 +14,9 @@ resource "aws_internet_gateway" "default" {
   Nat Instance
 ===============*/
 
-resource "aws_security_group" "nat" {
+resource "aws_security_group" "nat_testing" {
   name = "vpc_nat"
-  description = "Allow traffic to pass from private sub to           internet"
+  description = "Allow traffic to pass from private sub to internet"
 
   ingress {
     from_port = 80
@@ -74,12 +74,12 @@ resource "aws_security_group" "nat" {
   }
 }
 
-resource "aws_instance" "nat" {
+resource "aws_instance" "nat_testing" {
   ami = "ami-07fdd962"
   availability_zone = "us-east-2a"
   instance_type = "t2.micro"
   key_name = "${var.aws_key_name}"
-  vpc_security_group_ids = ["${aws_security_group.nat.id}"]
+  vpc_security_group_ids = ["${aws_security_group.nat_testing.id}"]
   subnet_id = "${aws_subnet.us-east-2a-public.id}"
   associate_public_ip_address = true
   source_dest_check = false
@@ -89,8 +89,8 @@ resource "aws_instance" "nat" {
   }
 }
 
-resource = "aws_eip" "nat" {
-  instance = "${aws_instance.nat.id}"
+resource "aws_eip" "nat_testing" {
+  instance = "${aws_instance.nat_testing.id}"
   vpc = true
 }
 
@@ -104,7 +104,7 @@ resource "aws_subnet" "us-east-2a-public" {
   availability_zone = "us-east-2a"
 
   tags = {
-    Name = "Solenberg Public Subnet"
+    Name = "Public Subnet"
   }
 }
 
@@ -143,10 +143,10 @@ resource "aws_subnet" "us-east-2b-private" {
 resource "aws_route_table" "us-east-2b-private" {
   vpc_id = "${aws_vpc.default.id}"
 
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = "${aws_instance.nat.id}"
-  }
+  #route {
+  #  cidr_block = "0.0.0.0/0"
+  #  gateway_id = "${aws_instance.nat_testing.id}"
+  #}
 
   tags {
     Name = "Private Subnet"
